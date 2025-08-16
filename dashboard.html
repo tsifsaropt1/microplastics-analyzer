@@ -22,22 +22,23 @@
         <div class="main-content">
             <div class="dashboard-stats">
                 <div class="stat-card-large">
-                    <h2>47</h2>
+                    <h2 id="total-scans">47</h2>
                     <p>Total Scans</p>
                 </div>
                 <div class="stat-card-large">
-                    <h2>23 ppm</h2>
+                    <h2 id="average-level">23 ppm</h2>
                     <p>Average Level</p>
                 </div>
                 <div class="stat-card-large">
-                    <h2>89%</h2>
-                    <p>Accuracy</p>
+                    <h2 id="health-score">89%</h2>
+                    <p>Health Score</p>
                 </div>
             </div>
             
             <div class="dashboard-chart">
                 <h3>Weekly Trends</h3>
-                <div class="chart-placeholder">
+                <div class="chart-placeholder" id="weekly-chart">
+                    <!-- Real weekly data will be loaded here -->
                     <div class="chart-bar" style="height: 60%"></div>
                     <div class="chart-bar" style="height: 80%"></div>
                     <div class="chart-bar" style="height: 45%"></div>
@@ -50,30 +51,15 @@
             
             <div class="recent-activity">
                 <h3>Recent Activity</h3>
-                <div class="activity-list">
+                <div class="activity-list" id="activity-list">
+                    <!-- Real data will be loaded here -->
                     <div class="activity-item">
                         <div class="activity-icon">✓</div>
                         <div class="activity-content">
-                            <div class="activity-title">Water Bottle Analysis</div>
-                            <div class="activity-subtitle">2 hours ago</div>
+                            <div class="activity-title">Loading recent activity...</div>
+                            <div class="activity-subtitle">Please wait</div>
                         </div>
-                        <div class="activity-result low">Low</div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-icon">✓</div>
-                        <div class="activity-content">
-                            <div class="activity-title">Food Container Scan</div>
-                            <div class="activity-subtitle">1 day ago</div>
-                        </div>
-                        <div class="activity-result medium">Medium</div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-icon">✓</div>
-                        <div class="activity-content">
-                            <div class="activity-title">Packaging Assessment</div>
-                            <div class="activity-subtitle">2 days ago</div>
-                        </div>
-                        <div class="activity-result high">High</div>
+                        <div class="activity-result">-</div>
                     </div>
                 </div>
             </div>
@@ -100,6 +86,337 @@
         </div>
     </div>
 
-    <script src="app.js"></script>
+    <script>
+        // API Configuration
+        const API_BASE_URL = 'http://localhost:8002';
+
+        // API helper functions
+        const API = {
+            async checkHealth() {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/health`);
+                    return await response.json();
+                } catch (error) {
+                    console.error('Health check failed:', error);
+                    return { status: 'error', message: 'Backend unavailable' };
+                }
+            },
+
+            async getReports(limit = 50) {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/reports?limit=${limit}`);
+                    return await response.json();
+                } catch (error) {
+                    console.error('Failed to fetch reports:', error);
+                    throw error;
+                }
+            },
+
+            async getUserStats() {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/user/stats`);
+                    return await response.json();
+                } catch (error) {
+                    console.error('Failed to fetch user stats:', error);
+                    throw error;
+                }
+            },
+
+            async getAnalysisStats() {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/analysis/stats`);
+                    return await response.json();
+                } catch (error) {
+                    console.error('Failed to fetch analysis stats:', error);
+                    throw error;
+                }
+            }
+        };
+
+        // Calculate health score - FIXED VERSION
+        function calculateHealthScore(riskDist) {
+            const total = (riskDist.low || 0) + (riskDist.medium || 0) + (riskDist.high || 0);
+            if (total === 0) return 100;
+            
+            const score = ((riskDist.low || 0) * 100 + (riskDist.medium || 0) * 60 + (riskDist.high || 0) * 20) / total;
+            return Math.round(score);
+        }
+
+        // ADDED: Generate weekly trends data
+        function generateWeeklyTrends(reports) {
+            const weeklyData = new Array(7).fill(0); // Last 7 days
+            const today = new Date();
+            
+            reports.forEach(report => {
+                const reportDate = new Date(report.timestamp);
+                const daysAgo = Math.floor((today - reportDate) / (1000 * 60 * 60 * 24));
+                
+                if (daysAgo >= 0 && daysAgo < 7) {
+                    weeklyData[6 - daysAgo]++; // Index 6 = today, 5 = yesterday, etc.
+                }
+            });
+            
+            return weeklyData;
+        }
+
+        // ADDED: Update weekly chart with real data
+        function updateWeeklyChart(weeklyData) {
+            const chartContainer = document.getElementById('weekly-chart');
+            if (!chartContainer) return;
+            
+            const maxValue = Math.max(...weeklyData, 1); // Avoid division by zero
+            const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            
+            chartContainer.innerHTML = '';
+            
+            weeklyData.forEach((count, index) => {
+                const height = Math.max((count / maxValue) * 100, 5); // Minimum 5% height
+                const bar = document.createElement('div');
+                bar.className = 'chart-bar';
+                bar.style.height = height + '%';
+                bar.title = `${dayLabels[index]}: ${count} scans`;
+                chartContainer.appendChild(bar);
+            });
+            
+            console.log('Weekly chart updated with data:', weeklyData);
+        }
+        function formatTimeAgo(date) {
+            const now = new Date();
+            const diffMinutes = Math.floor((now - date) / (1000 * 60));
+            
+            if (diffMinutes < 60) return `${diffMinutes} minutes ago`;
+            if (diffMinutes < 1440) return `${Math.floor(diffMinutes / 60)} hours ago`;
+            return `${Math.floor(diffMinutes / 1440)} days ago`;
+        }
+
+        // FIXED: Load dashboard data with proper DOM updates
+        async function loadDashboardData() {
+            try {
+                console.log('Loading dashboard data...');
+                
+                // Load analysis stats
+                const analysisStatsResponse = await API.getAnalysisStats();
+                if (analysisStatsResponse.success) {
+                    const stats = analysisStatsResponse.stats;
+                    console.log('Analysis stats received:', stats);
+                    
+                    // FIXED: Ensure DOM elements exist before updating
+                    const totalScansEl = document.getElementById('total-scans');
+                    const averageLevelEl = document.getElementById('average-level');
+                    const healthScoreEl = document.getElementById('health-score');
+                    
+                    if (totalScansEl) {
+                        totalScansEl.textContent = stats.total_analyses || 0;
+                        console.log('Updated total scans to:', stats.total_analyses);
+                    }
+                    
+                    if (averageLevelEl) {
+                        const avgLevel = (stats.average_microplastics || 0).toFixed(1) + ' ppm';
+                        averageLevelEl.textContent = avgLevel;
+                        console.log('Updated average level to:', avgLevel);
+                    }
+                    
+                    if (healthScoreEl) {
+                        const healthScore = calculateHealthScore(stats.risk_distribution || {});
+                        const healthScoreText = healthScore + '%';
+                        healthScoreEl.textContent = healthScoreText;
+                        console.log('Updated health score to:', healthScoreText);
+                    }
+                    
+                    console.log('All dashboard stats updated successfully');
+                }
+
+                // Load recent reports for activity list AND weekly chart
+                const reportsResponse = await API.getReports(50); // Get more reports for weekly analysis
+                if (reportsResponse.success && reportsResponse.reports) {
+                    console.log('Loading activity list with', reportsResponse.reports.length, 'reports');
+                    updateActivityList(reportsResponse.reports);
+                    
+                    // ADDED: Update weekly trends chart
+                    const weeklyData = generateWeeklyTrends(reportsResponse.reports);
+                    updateWeeklyChart(weeklyData);
+                }
+                
+                console.log('Dashboard data loaded successfully');
+                
+            } catch (error) {
+                console.error('Failed to load dashboard data:', error);
+                
+                // Show fallback message
+                const activityList = document.getElementById('activity-list');
+                if (activityList) {
+                    activityList.innerHTML = `
+                        <div class="activity-item">
+                            <div class="activity-icon">❌</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Unable to load data</div>
+                                <div class="activity-subtitle">Backend connection failed</div>
+                            </div>
+                            <div class="activity-result">-</div>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // Update activity list with real data
+        function updateActivityList(reports) {
+            const activityList = document.getElementById('activity-list');
+            if (!activityList) {
+                console.error('Activity list element not found');
+                return;
+            }
+            
+            activityList.innerHTML = '';
+            
+            if (reports.length === 0) {
+                activityList.innerHTML = `
+                    <div class="activity-item">
+                        <div class="activity-icon">📱</div>
+                        <div class="activity-content">
+                            <div class="activity-title">No scans yet</div>
+                            <div class="activity-subtitle">Start scanning to see your activity</div>
+                        </div>
+                        <div class="activity-result">-</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            reports.slice(0, 5).forEach((report, index) => {
+                try {
+                    // Parse report content
+                    const content = report.content;
+                    const lines = content.split('\n');
+                    
+                    let foodType = 'Unknown';
+                    let riskLevel = 'UNKNOWN';
+                    
+                    lines.forEach(line => {
+                        if (line.startsWith('FOOD:')) {
+                            foodType = line.split(':')[1].trim();
+                        } else if (line.startsWith('RISK:')) {
+                            riskLevel = line.split(':')[1].trim();
+                        }
+                    });
+                    
+                    // Format timestamp
+                    const date = new Date(report.timestamp);
+                    const timeAgo = formatTimeAgo(date);
+                    
+                    // Determine risk class
+                    const riskClass = riskLevel.toLowerCase();
+                    
+                    // Create activity item
+                    const activityItem = document.createElement('div');
+                    activityItem.className = 'activity-item';
+                    activityItem.innerHTML = `
+                        <div class="activity-icon">✓</div>
+                        <div class="activity-content">
+                            <div class="activity-title">${foodType} Analysis</div>
+                            <div class="activity-subtitle">${timeAgo}</div>
+                        </div>
+                        <div class="activity-result ${riskClass}">${riskLevel}</div>
+                    `;
+                    
+                    activityList.appendChild(activityItem);
+                    console.log(`Added activity item ${index + 1}: ${foodType} - ${riskLevel}`);
+                } catch (error) {
+                    console.error('Error parsing report:', error);
+                }
+            });
+            
+            console.log('Activity list updated with', reports.length, 'items');
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()">×</button>
+            `;
+            
+            // Add notification styles if not already added
+            if (!document.querySelector('#notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    .notification {
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        padding: 12px 16px;
+                        border-radius: 8px;
+                        color: white;
+                        z-index: 1000;
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        max-width: 300px;
+                        animation: slideIn 0.3s ease;
+                        font-family: 'Montserrat', sans-serif;
+                        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                    }
+                    .notification-info { background: #3b82f6; }
+                    .notification-warning { background: #f59e0b; }
+                    .notification-error { background: #ef4444; }
+                    .notification-success { background: #10b981; }
+                    .notification button {
+                        background: none;
+                        border: none;
+                        color: white;
+                        cursor: pointer;
+                        font-size: 18px;
+                        padding: 0;
+                        margin: 0;
+                        transition: opacity 0.2s;
+                    }
+                    .notification button:hover {
+                        opacity: 0.8;
+                    }
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        // Initialize dashboard when DOM is loaded
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('Dashboard initialized');
+            
+            try {
+                // Check backend connection
+                const healthCheck = await API.checkHealth();
+                
+                if (healthCheck.status !== 'error') {
+                    console.log('Backend connected successfully');
+                    showNotification('✅ Connected to AI backend', 'success');
+                    
+                    // Load real dashboard data
+                    await loadDashboardData();
+                } else {
+                    console.warn('Backend unavailable - using offline mode');
+                    showNotification('⚠️ Backend unavailable - using demo data', 'warning');
+                }
+            } catch (error) {
+                console.error('Failed to connect to backend:', error);
+                showNotification('❌ Backend connection failed', 'error');
+            }
+        });
+    </script>
 </body>
 </html>

@@ -1269,23 +1269,17 @@ body {
 }
 
 /* Mock Chart */
-.mock-chart {
-    height: 120px;
-    background: linear-gradient(135deg, #10b981, #059669);
-    border-radius: 16px;
-    position: relative;
-    overflow: hidden;
+/* Dynamic chart override */
+.mock-chart.dynamic {
+    background: rgba(255, 255, 255, 0.1) !important;
+    display: flex !important;
+    align-items: end !important;
+    padding: 20px !important;
+    gap: 8px !important;
 }
 
-.mock-chart::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 60%;
-    background: rgba(255, 255, 255, 0.1);
-    clip-path: polygon(0 100%, 20% 80%, 40% 85%, 60% 60%, 80% 70%, 100% 40%, 100% 100%);
+.mock-chart.dynamic::before {
+    display: none !important;
 }
 
 /* Results Grid */

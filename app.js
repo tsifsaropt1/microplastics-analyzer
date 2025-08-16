@@ -64,8 +64,8 @@ window.addEventListener('hashchange', () => {
     }
 });
 
-// API Configuration for backend connection
-const API_BASE_URL = 'http://127.0.0.1:3000'
+// API Configuration for backend connection - FIXED: Use correct port
+const API_BASE_URL = 'http://localhost:8002'
 
 // API helper functions
 const API = {
@@ -243,6 +243,166 @@ async function loadRealStats() {
     }
 }
 
+// ADDED: Update chart in history tab on index page
+// FIXED: Update chart in history tab on index page
+async function updateHistoryChart() {
+    try {
+        const reportsResponse = await API.getReports(50);
+        if (reportsResponse.success && reportsResponse.reports) {
+            const reports = reportsResponse.reports;
+            
+            // Generate daily data for last 7 days
+            const dailyData = new Array(7).fill(0);
+            const today = new Date();
+            
+            reports.forEach(report => {
+                const reportDate = new Date(report.timestamp);
+                const daysAgo = Math.floor((today - reportDate) / (1000 * 60 * 60 * 24));
+                
+                if (daysAgo >= 0 && daysAgo < 7) {
+                    dailyData[6 - daysAgo]++;
+                }
+            });
+            
+            // Find the chart element
+            const chartElement = document.querySelector('.mock-chart');
+            console.log('Chart element found:', chartElement);
+            
+            if (chartElement) {
+                // Clear and update the chart
+                chartElement.innerHTML = '';
+                chartElement.style.cssText = `
+                    height: 120px;
+                    background: rgba(255, 255, 255, 0.1) !important;
+                    border-radius: 16px;
+                    display: flex !important;
+                    align-items: end !important;
+                    padding: 20px !important;
+                    gap: 8px !important;
+                `;
+                
+                const maxValue = Math.max(...dailyData, 1);
+                
+                dailyData.forEach((count, index) => {
+                    const height = Math.max((count / maxValue) * 100, 10);
+                    const bar = document.createElement('div');
+                    bar.style.cssText = `
+                        flex: 1;
+                        background: linear-gradient(135deg, #10b981, #34d399);
+                        border-radius: 4px;
+                        height: ${height}%;
+                        transition: all 0.3s ease;
+                    `;
+                    bar.title = `Day ${index + 1}: ${count} scans`;
+                    chartElement.appendChild(bar);
+                });
+                
+                console.log('History chart updated with real data:', dailyData);
+            }
+        }
+    } catch (error) {
+        console.error('Failed to update history chart:', error);
+    }
+}
+async function loadDashboardData() {
+    try {
+        console.log('Loading dashboard data...');
+        
+        const analysisStatsResponse = await API.getAnalysisStats();
+        if (analysisStatsResponse.success) {
+            const stats = analysisStatsResponse.stats;
+            console.log('Dashboard stats:', stats);
+            
+            // Update dashboard stat cards (different selectors than index page)
+            const totalScans = document.getElementById('total-scans');
+            const averageLevel = document.getElementById('average-level');
+            const healthScore = document.getElementById('health-score');
+            
+            if (totalScans) totalScans.textContent = stats.total_analyses || 0;
+            if (averageLevel) averageLevel.textContent = (stats.average_microplastics || 0).toFixed(1) + ' ppm';
+            if (healthScore) {
+                const score = calculateHealthScore(stats.risk_distribution || {});
+                healthScore.textContent = score + '%';
+            }
+        }
+
+        // Load recent reports for activity list
+        const reportsResponse = await API.getReports(5);
+        if (reportsResponse.success && reportsResponse.reports) {
+            updateDashboardActivity(reportsResponse.reports);
+        }
+        
+        console.log('Dashboard data loaded successfully');
+        
+    } catch (error) {
+        console.error('Failed to load dashboard data:', error);
+    }
+}
+
+// ADDED: Update dashboard activity list
+function updateDashboardActivity(reports) {
+    const activityList = document.getElementById('activity-list');
+    if (!activityList) return;
+    
+    activityList.innerHTML = '';
+    
+    if (reports.length === 0) {
+        activityList.innerHTML = `
+            <div class="activity-item">
+                <div class="activity-icon">📱</div>
+                <div class="activity-content">
+                    <div class="activity-title">No scans yet</div>
+                    <div class="activity-subtitle">Start scanning to see your activity</div>
+                </div>
+                <div class="activity-result">-</div>
+            </div>
+        `;
+        return;
+    }
+    
+    reports.slice(0, 5).forEach(report => {
+        try {
+            // Parse report content
+            const content = report.content;
+            const lines = content.split('\n');
+            
+            let foodType = 'Unknown';
+            let riskLevel = 'UNKNOWN';
+            
+            lines.forEach(line => {
+                if (line.startsWith('FOOD:')) {
+                    foodType = line.split(':')[1].trim();
+                } else if (line.startsWith('RISK:')) {
+                    riskLevel = line.split(':')[1].trim();
+                }
+            });
+            
+            // Format timestamp
+            const date = new Date(report.timestamp);
+            const timeAgo = formatTimeAgo(date);
+            
+            // Determine risk class
+            const riskClass = riskLevel.toLowerCase();
+            
+            // Create activity item
+            const activityItem = document.createElement('div');
+            activityItem.className = 'activity-item';
+            activityItem.innerHTML = `
+                <div class="activity-icon">✓</div>
+                <div class="activity-content">
+                    <div class="activity-title">${foodType} Analysis</div>
+                    <div class="activity-subtitle">${timeAgo}</div>
+                </div>
+                <div class="activity-result ${riskClass}">${riskLevel}</div>
+            `;
+            
+            activityList.appendChild(activityItem);
+        } catch (error) {
+            console.error('Error parsing report:', error);
+        }
+    });
+}
+
 // Calculate health score
 function calculateHealthScore(riskDist) {
     const total = (riskDist.low || 0) + (riskDist.medium || 0) + (riskDist.high || 0);
@@ -317,29 +477,30 @@ function showNotification(message, type = 'info') {
     }, 5000);
 }
 
-// Initialize app when DOM is loaded
+// UPDATED: Initialize app when DOM is loaded with dashboard support
 document.addEventListener('DOMContentLoaded', async function() {
     console.log('Microplastics Analyzer App Initialized');
     
-    // Check if we're on the index page
+    // Check page type
     const isIndexPage = window.location.pathname === '/' || 
                        window.location.pathname.endsWith('index.html') ||
                        window.location.pathname === '/index.html';
     
+    const isDashboardPage = window.location.pathname.endsWith('dashboard.html');
+    
     if (isIndexPage) {
         // Load real data for index page
         try {
-            // Check backend connection
             const healthCheck = await API.checkHealth();
             
             if (healthCheck.status !== 'error') {
                 console.log('Backend connected successfully');
                 showNotification('✅ Connected to AI backend', 'success');
                 
-                // Load real data
                 await Promise.all([
                     loadRecentHistory(),
-                    loadRealStats()
+                    loadRealStats(),
+                    updateHistoryChart()
                 ]);
                 
                 console.log('Real data loaded successfully');
@@ -358,6 +519,26 @@ document.addEventListener('DOMContentLoaded', async function() {
             showTab(hash);
         } else {
             showTab('overview');
+        }
+    } else if (isDashboardPage) {
+        // ADDED: Load real data for dashboard page
+        try {
+            const healthCheck = await API.checkHealth();
+            
+            if (healthCheck.status !== 'error') {
+                console.log('Backend connected for dashboard');
+                showNotification('✅ Connected to AI backend', 'success');
+                
+                await loadDashboardData();
+                
+                console.log('Dashboard data loaded successfully');
+            } else {
+                console.warn('Backend unavailable for dashboard');
+                showNotification('⚠️ Backend unavailable - using demo data', 'warning');
+            }
+        } catch (error) {
+            console.error('Failed to connect to backend for dashboard:', error);
+            showNotification('❌ Backend connection failed', 'error');
         }
     }
 });
