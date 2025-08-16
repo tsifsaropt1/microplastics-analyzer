@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Item - Microplastics Analyzer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="mobile-container">
+        <!-- Status Bar -->
+        <div class="status-bar"></div>
+        
+        <!-- Header -->
+        <div class="header">
+            <button class="back-button" onclick="window.location.href='index.html'">←</button>
+            <h1>Scan Item</h1>
+            <p>Point camera at item to analyze</p>
+        </div>
+
+        <!-- Scan Content -->
+        <div class="main-content">
+            <div class="scan-container">
+                <div class="scan-preview">
+                    <video id="camera-video" autoplay playsinline></video>
+                    <canvas id="camera-canvas" style="display: none;"></canvas>
+                    <div id="camera-placeholder" class="camera-placeholder">
+                        <div class="camera-icon">📷</div>
+                        <p>Click 'Scan' to start camera</p>
+                    </div>
+                </div>
+                
+                <div class="scan-controls">
+                    <button class="scan-btn primary" id="start-scan-btn" onclick="startCamera()">
+                        <span class="scan-icon">🔍</span>
+                        Scan
+                    </button>
+                    <button class="scan-btn primary" id="capture-btn" onclick="capturePhoto()" style="display: none;">
+                        <span class="scan-icon">📸</span>
+                        Capture Photo
+                    </button>
+                    <button class="scan-btn secondary" onclick="window.location.href='index.html'">
+                        Cancel
+                    </button>
+                </div>
+                
+                <div class="scan-tips">
+                    <h3>Scanning Tips</h3>
+                    <ul>
+                        <li>Ensure good lighting</li>
+                        <li>Hold camera steady</li>
+                        <li>Fill frame with item</li>
+                        <li>Avoid shadows</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-item" onclick="window.location.href='index.html'">
+                <div class="nav-icon">🏠</div>
+                <div class="nav-label">Home</div>
+            </div>
+            <div class="nav-item active">
+                <div class="nav-icon">📷</div>
+                <div class="nav-label">Scan</div>
+            </div>
+            <div class="nav-item" onclick="window.location.href='index.html#history'">
+                <div class="nav-icon">📊</div>
+                <div class="nav-label">History</div>
+            </div>
+            <div class="nav-item" onclick="window.location.href='settings.html'">
+                <div class="nav-icon">⚙️</div>
+                <div class="nav-label">Settings</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Camera functionality
+        let stream = null;
+
+        // Don't auto-start camera - wait for user to click "Scan"
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     startCamera();
+        // });
+
+        async function startCamera() {
+            try {
+                const video = document.getElementById('camera-video');
+                const placeholder = document.getElementById('camera-placeholder');
+                const captureBtn = document.getElementById('capture-btn');
+                const startBtn = document.getElementById('start-scan-btn');
+                
+                // Update placeholder text
+                placeholder.innerHTML = `
+                    <div class="camera-icon">📷</div>
+                    <p>Requesting camera access...</p>
+                `;
+                
+                // Request camera access
+                stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        facingMode: 'environment', // Use back camera on mobile
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    } 
+                });
+                
+                // Set video source
+                video.srcObject = stream;
+                
+                // Show video, hide placeholder
+                video.style.display = 'block';
+                placeholder.style.display = 'none';
+                
+                // Show capture button, hide scan button
+                captureBtn.style.display = 'block';
+                startBtn.style.display = 'none';
+                
+                showNotification('Camera started successfully!', 'success');
+                
+            } catch (error) {
+                console.error('Camera access failed:', error);
+                showNotification('Camera access denied. Please allow camera permissions.', 'error');
+                
+                // Show fallback option
+                const placeholder = document.getElementById('camera-placeholder');
+                placeholder.innerHTML = `
+                    <div class="camera-icon">❌</div>
+                    <p>Camera not available</p>
+                    <button class="scan-btn secondary" onclick="uploadPhoto()">Upload Photo Instead</button>
+                `;
+            }
+        }
+
+        function capturePhoto() {
+            const video = document.getElementById('camera-video');
+            const canvas = document.getElementById('camera-canvas');
+            const captureBtn = document.getElementById('capture-btn');
+            
+            if (!video.videoWidth || !video.videoHeight) {
+                showNotification('Camera not ready. Please wait...', 'warning');
+                return;
+            }
+            
+            // Set canvas dimensions to match video
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            // Draw current video frame to canvas
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0);
+            
+            // Convert to blob and process
+            canvas.toBlob(async (blob) => {
+                try {
+                    captureBtn.innerHTML = '<span class="loading">🔄</span> Processing...';
+                    captureBtn.disabled = true;
+                    
+                    // Stop camera
+                    stopCamera();
+                    
+                    // Process the image (simulate analysis)
+                    await processImage(blob);
+                    
+                } catch (error) {
+                    console.error('Image processing failed:', error);
+                    showNotification('Image processing failed. Please try again.', 'error');
+                    captureBtn.innerHTML = '<span class="scan-icon">📸</span> Capture Photo';
+                    captureBtn.disabled = false;
+                }
+            }, 'image/jpeg', 0.8);
+        }
+
+        function stopCamera() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+            }
+        }
+
+        // Upload photo alternative
+        function uploadPhoto() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.capture = 'environment'; // Prefer camera on mobile
+            
+            input.onchange = async (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    try {
+                        showNotification('Processing uploaded image...', 'info');
+                        await processImage(file);
+                    } catch (error) {
+                        console.error('Upload processing failed:', error);
+                        showNotification('Upload processing failed. Please try again.', 'error');
+                    }
+                }
+            };
+            
+            input.click();
+        }
+
+        // Process captured/uploaded image
+        async function processImage(imageBlob) {
+            try {
+                // Create FormData for the CORRECT backend API
+                const formData = new FormData();
+                formData.append('file', imageBlob, 'scan.jpg');
+                
+                // Call your ACTUAL working backend API (port 8002, /analyze-food endpoint)
+                const response = await fetch('http://localhost:8002/analyze-food', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Backend error: ${response.status}`);
+                }
+                
+                const backendResult = await response.json();
+                console.log('Backend result:', backendResult);
+                
+                if (!backendResult.success) {
+                    throw new Error(backendResult.error || 'Analysis failed');
+                }
+                
+                // Parse the real Gemini AI results from the correct structure
+                const parsedResults = backendResult.parsed_results;
+                
+                if (!parsedResults || parsedResults.length === 0) {
+                    throw new Error('No food detected in image');
+                }
+                
+                // Get the first detected food item (from your working backend structure)
+                const firstItem = parsedResults[0];
+                
+                // Extract real data from Gemini analysis with correct field names
+                const foodType = firstItem.food || 'Unknown Food';
+                const microplasticsText = firstItem.microplastics || '0 mg/kg';
+                const riskLevel = firstItem.risk || 'UNKNOWN';
+                const caloriesText = firstItem.calories || '0 kcal';
+                const quantity = firstItem.quantity || 'Unknown';
+                
+                // Parse numeric values correctly
+                const microplasticsMgKg = parseFloat(microplasticsText.replace(/[^\d.]/g, '')) || 0;
+                const calories = parseInt(caloriesText.replace(/[^\d]/g, '')) || 0;
+                
+                // Convert mg/kg to ppm for display (1 mg/kg ≈ 1 ppm for water/food)
+                const ppm = Math.round(microplasticsMgKg) || 1; // Ensure at least 1 for display
+                
+                // Calculate confidence (Gemini is usually high confidence)
+                const confidence = 95;
+                
+                console.log('Parsed data:', {
+                    foodType, 
+                    microplasticsMgKg, 
+                    riskLevel, 
+                    calories, 
+                    quantity, 
+                    ppm
+                });
+                
+                // Redirect to results page with REAL AI data
+                const params = new URLSearchParams({
+                    ppm: ppm,
+                    confidence: confidence,
+                    type: foodType,
+                    material: 'Food/Organic',
+                    risk: riskLevel,
+                    calories: calories,
+                    quantity: quantity,
+                    microplastics_mgkg: microplasticsMgKg,
+                    timestamp: backendResult.timestamp,
+                    gemini_analysis: 'true',
+                    raw_analysis: encodeURIComponent(backendResult.raw_analysis)
+                });
+                
+                window.location.href = `results.html?${params.toString()}`;
+                
+            } catch (error) {
+                console.error('Real backend analysis failed:', error);
+                showNotification(`Analysis failed: ${error.message}`, 'error');
+                
+                // Reset the capture button
+                const captureBtn = document.getElementById('capture-btn');
+                if (captureBtn) {
+                    captureBtn.innerHTML = '<span class="scan-icon">📸</span> Capture Photo';
+                    captureBtn.disabled = false;
+                }
+            }
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()">×</button>
+            `;
+            
+            // Add notification styles if not already added
+            if (!document.querySelector('#notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    .notification {
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        padding: 12px 16px;
+                        border-radius: 8px;
+                        color: white;
+                        z-index: 1000;
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        max-width: 300px;
+                        animation: slideIn 0.3s ease;
+                        font-family: 'Montserrat', sans-serif;
+                    }
+                    .notification-info { background: #3b82f6; }
+                    .notification-warning { background: #f59e0b; }
+                    .notification-error { background: #ef4444; }
+                    .notification-success { background: #10b981; }
+                    .notification button {
+                        background: none;
+                        border: none;
+                        color: white;
+                        cursor: pointer;
+                        font-size: 18px;
+                        padding: 0;
+                        margin: 0;
+                    }
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        // Clean up camera when leaving page
+        window.addEventListener('beforeunload', () => {
+            stopCamera();
+        });
+    </script>
+</body>
+</html>

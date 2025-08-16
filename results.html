@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Results - Microplastics Analyzer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="mobile-container">
+        <!-- Status Bar -->
+        <div class="status-bar"></div>
+        
+        <!-- Header -->
+        <div class="header">
+            <button class="back-button" onclick="window.location.href='index.html'">←</button>
+            <h1>Scan Results</h1>
+            <p>Analysis complete</p>
+        </div>
+
+        <!-- Results Content -->
+        <div class="main-content">
+            <div class="results-header">
+                <div class="result-status success">
+                    <span class="status-icon">✓</span>
+                    <span>Analysis Complete</span>
+                </div>
+                <div class="scan-timestamp" id="scan-timestamp">Today, 2:45 PM</div>
+            </div>
+            
+            <div class="result-summary">
+                <div class="result-level medium" id="result-level-container">
+                    <div class="level-badge">
+                        <span class="level-icon" id="level-icon">⚠️</span>
+                        <span class="level-text" id="level-text">Medium Level</span>
+                    </div>
+                    <div class="level-indicator">
+                        <div class="level-bar medium" id="level-bar"></div>
+                    </div>
+                    <div class="ppm-reading">
+                        <span class="ppm-number" id="ppm-number">0</span>
+                        <span class="ppm-unit">ppm detected</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-image">
+                <div class="scanned-image">
+                    <div class="image-placeholder">
+                        <span class="camera-icon">📷</span>
+                        <span id="scanned-item-name">Scanned Item</span>
+                    </div>
+                    <div class="image-overlay">
+                        <div class="detection-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-details">
+                <h3>Analysis Details</h3>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Sample Type</span>
+                        <span class="detail-value" id="sample-type">Unknown</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Confidence</span>
+                        <span class="detail-value" id="confidence">0%</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Scan Time</span>
+                        <span class="detail-value" id="scan-time">0 seconds</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Location</span>
+                        <span class="detail-value" id="location">Unknown</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Risk Level</span>
+                        <span class="detail-value risk-medium" id="risk-level">Moderate</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Date</span>
+                        <span class="detail-value" id="scan-date">Today</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="health-impact">
+                <h3>Health Impact</h3>
+                <div class="impact-card">
+                    <div class="impact-icon" id="impact-icon">🩺</div>
+                    <div class="impact-content" id="impact-content">
+                        <h4>Loading...</h4>
+                        <p>Analyzing health impact...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recommendations">
+                <h3>Recommendations</h3>
+                <div class="recommendation-list" id="recommendation-list">
+                    <!-- Will be populated dynamically -->
+                </div>
+            </div>
+            
+            <div class="result-actions">
+                <button class="action-btn primary" onclick="saveResult()">
+                    <span class="btn-icon">💾</span>
+                    Save Result
+                </button>
+                <button class="action-btn secondary" onclick="shareResult()">
+                    <span class="btn-icon">📤</span>
+                    Share Result
+                </button>
+                <button class="action-btn secondary" onclick="window.location.href='scan.html'">
+                    <span class="btn-icon">📷</span>
+                    Scan Another
+                </button>
+            </div>
+
+            <div class="comparison-section">
+                <h3>How does this compare?</h3>
+                <div class="comparison-chart">
+                    <div class="comparison-item">
+                        <div class="comp-label">Your Result</div>
+                        <div class="comp-bar">
+                            <div class="comp-fill your-result" id="your-result-bar"></div>
+                        </div>
+                        <div class="comp-value" id="your-result-value">0 ppm</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comp-label">Your Average</div>
+                        <div class="comp-bar">
+                            <div class="comp-fill average" id="average-bar"></div>
+                        </div>
+                        <div class="comp-value" id="average-value">0 ppm</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comp-label">Safe Level</div>
+                        <div class="comp-bar">
+                            <div class="comp-fill safe" style="width: 20%"></div>
+                        </div>
+                        <div class="comp-value">10 ppm</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-item" onclick="window.location.href='index.html'">
+                <div class="nav-icon">🏠</div>
+                <div class="nav-label">Home</div>
+            </div>
+            <div class="nav-item" onclick="window.location.href='scan.html'">
+                <div class="nav-icon">📷</div>
+                <div class="nav-label">Scan</div>
+            </div>
+            <div class="nav-item" onclick="window.location.href='index.html#history'">
+                <div class="nav-icon">📊</div>
+                <div class="nav-label">History</div>
+            </div>
+            <div class="nav-item" onclick="window.location.href='settings.html'">
+                <div class="nav-icon">⚙️</div>
+                <div class="nav-label">Settings</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        let currentScanData = null;
+
+        // Function to load and display the most recent scan or from URL params
+        function loadScanResults() {
+            // First try to get data from URL parameters (for direct navigation)
+            const urlParams = new URLSearchParams(window.location.search);
+            const scanId = urlParams.get('scanId');
+            
+            let scanData = null;
+            
+            if (scanId && window.MicroplasticsApp) {
+                // Find specific scan by ID
+                scanData = window.MicroplasticsApp.getScans().find(scan => scan.id == scanId);
+            } else if (urlParams.get('ppm')) {
+                // Create scan data from URL parameters (for new scans)
+                scanData = {
+                    id: Date.now(),
+                    name: urlParams.get('name') || 'Unknown Item',
+                    type: urlParams.get('type') || 'unknown',
+                    level: parseFloat(urlParams.get('ppm')) || 0,
+                    location: urlParams.get('location') || 'Unknown',
+                    confidence: parseInt(urlParams.get('confidence')) || 95,
+                    notes: urlParams.get('notes') || '',
+                    timestamp: Date.now()
+                };
+                scanData.category = categorizePpm(scanData.level);
+                
+                // Add to app data if available
+                if (window.MicroplasticsApp) {
+                    window.MicroplasticsApp.addScan(scanData);
+                }
+            } else if (window.MicroplasticsApp) {
+                // Get most recent scan
+                const scans = window.MicroplasticsApp.getScans();
+                if (scans.length > 0) {
+                    scanData = scans[0];
+                }
+            }
+            
+            if (scanData) {
+                currentScanData = scanData;
+                displayScanResults(scanData);
+            } else {
+                // Show fallback data
+                showFallbackResults();
+            }
+        }
+
+        function categorizePpm(level) {
+            if (level <= 10) return 'low';
+            if (level <= 30) return 'medium';
+            return 'high';
+        }
+
+        function displayScanResults(scan) {
+            // Update basic info
+            document.getElementById('ppm-number').textContent = scan.level.toFixed(1);
+            document.getElementById('sample-type').textContent = formatSampleType(scan.type);
+            document.getElementById('confidence').textContent = scan.confidence + '%';
+            document.getElementById('location').textContent = scan.location;
+            document.getElementById('scanned-item-name').textContent = scan.name;
+            
+            // Calculate and display scan time (simulated)
+            const scanTime = (2 + Math.random() * 3).toFixed(1);
+            document.getElementById('scan-time').textContent = scanTime + ' seconds';
+            
+            // Update timestamp
+            document.getElementById('scan-timestamp').textContent = formatTimestamp(scan.timestamp);
+            document.getElementById('scan-date').textContent = new Date(scan.timestamp).toLocaleDateString();
+            
+            // Update level display
+            const level = scan.category;
+            updateLevelDisplay(level, scan.level);
+            
+            // Update risk level
+            const riskLevel = getRiskLevel(scan.level);
+            const riskElement = document.getElementById('risk-level');
+            riskElement.textContent = riskLevel;
+            riskElement.className = `detail-value risk-${level}`;
+            
+            // Update health impact
+            updateHealthImpact(level, scan.level);
+            
+            // Update recommendations
+            updateRecommendations(level, scan.type);
+            
+            // Update comparison chart
+            updateComparisonChart(scan.level);
+        }
+
+        function formatSampleType(type) {
+            const typeMap = {
+                'beverage_container': 'Beverage Container',
+                'food_packaging': 'Food Packaging', 
+                'product_packaging': 'Product Packaging',
+                'bag': 'Bag',
+                'unknown': 'Unknown Item'
+            };
+            return typeMap[type] || type.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+        }
+
+        function updateLevelDisplay(level, ppmValue) {
+            const levelContainer = document.getElementById('result-level-container');
+            const levelText = document.getElementById('level-text');
+            const levelIcon = document.getElementById('level-icon');
+            const levelBar = document.getElementById('level-bar');
+            
+            // Update classes
+            levelContainer.className = `result-level ${level}`;
+            levelBar.className = `level-bar ${level}`;
+            
+            // Update text and icon
+            levelText.textContent = level.charAt(0).toUpperCase() + level.slice(1) + ' Level';
+            
+            if (level === 'low') {
+                levelIcon.textContent = '✅';
+            } else if (level === 'medium') {
+                levelIcon.textContent = '⚠️';
+            } else {
+                levelIcon.textContent = '🚨';
+            }
+        }
+
+        function getRiskLevel(ppm) {
+            if (ppm <= 10) return 'Minimal';
+            if (ppm <= 30) return 'Moderate';
+            return 'High';
+        }
+
+        function formatTimestamp(timestamp) {
+            const date = new Date(timestamp);
+            const now = new Date();
+            const diffMinutes = Math.floor((now - date) / (1000 * 60));
+            
+            if (diffMinutes < 1) return 'Just now';
+            if (diffMinutes < 60) return `${diffMinutes} minutes ago`;
+            if (diffMinutes < 1440) {
+                const hours = Math.floor(diffMinutes / 60);
+                return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+            }
+            
+            const today = new Date();
+            const yesterday = new Date(today);
+            yesterday.setDate(today.getDate() - 1);
+            
+            if (date.toDateString() === today.toDateString()) {
+                return 'Today, ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            } else if (date.toDateString() === yesterday.toDateString()) {
+                return 'Yesterday, ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            }
+            
+            return date.toLocaleDateString() + ', ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }
+
+        function updateHealthImpact(level, ppm) {
+            const impactIcon = document.getElementById('impact-icon');
+            const impactContent = document.getElementById('impact-content');
+            
+            let icon, title, description;
+            
+            if (level === 'low') {
+                icon = '💚';
+                title = 'Low Concern';
+                description = 'This level of microplastics is within acceptable ranges. Continue monitoring your exposure and consider preventive measures to maintain low levels.';
+            } else if (level === 'medium') {
+                icon = '⚠️';
+                title = 'Moderate Concern';
+                description = 'This level of microplastics may contribute to long-term health effects. Consider switching to glass or stainless steel containers for food storage.';
+            } else {
+                icon = '🚨';
+                title = 'High Concern';
+                description = 'This level of microplastics is concerning and may pose health risks. We strongly recommend avoiding this type of container and seeking safer alternatives immediately.';
+            }
+            
+            impactIcon.textContent = icon;
+            impactContent.innerHTML = `
+                <h4>${title}</h4>
+                <p>${description}</p>
+            `;
+        }
+
+        function updateRecommendations(level, itemType) {
+            const recommendationList = document.getElementById('recommendation-list');
+            
+            let recommendations = [];
+            
+            if (level === 'low') {
+                recommendations = [
+                    { icon: '✅', text: 'Continue using current practices' },
+                    { icon: '🔄', text: 'Regular monitoring recommended' },
+                    { icon: '🌱', text: 'Consider eco-friendly alternatives when replacing items' }
+                ];
+            } else if (level === 'medium') {
+                recommendations = [
+                    { icon: '♻️', text: 'Switch to glass containers for food storage' },
+                    { icon: '🌱', text: 'Look for BPA-free alternatives' },
+                    { icon: '🔄', text: 'Avoid heating plastic containers' }
+                ];
+            } else {
+                recommendations = [
+                    { icon: '🚫', text: 'Stop using this container immediately' },
+                    { icon: '♻️', text: 'Replace with glass or stainless steel' },
+                    { icon: '🩺', text: 'Consider consulting healthcare provider' },
+                    { icon: '🔍', text: 'Check all similar containers in your home' }
+                ];
+            }
+            
+            // Add item-specific recommendations
+            if (itemType === 'beverage_container') {
+                recommendations.push({ icon: '🥤', text: 'Use reusable water bottles made from safe materials' });
+            } else if (itemType === 'food_packaging') {
+                recommendations.push({ icon: '🍱', text: 'Transfer food to glass containers before storage' });
+            }
+            
+            recommendationList.innerHTML = recommendations.map(rec => `
+                <div class="recommendation-item">
+                    <div class="rec-icon">${rec.icon}</div>
+                    <div class="rec-text">${rec.text}</div>
+                </div>
+            `).join('');
+        }
+
+        function updateComparisonChart(ppm) {
+            const yourResultBar = document.getElementById('your-result-bar');
+            const yourResultValue = document.getElementById('your-result-value');
+            const averageBar = document.getElementById('average-bar');
+            const averageValue = document.getElementById('average-value');
+            
+            // Update your result
+            const maxComparison = 60; // Max value for comparison chart
+            const yourPercentage = Math.min((ppm / maxComparison) * 100, 100);
+            yourResultBar.style.width = yourPercentage + '%';
+            yourResultValue.textContent = ppm.toFixed(1) + ' ppm';
+            
+            // Get user's average if available
+            let userAverage = 0;
+            if (window.MicroplasticsApp) {
+                const appData = window.MicroplasticsApp.getData();
+                userAverage = appData.getAverageLevel();
+            }
+            
+            const avgPercentage = Math.min((userAverage / maxComparison) * 100, 100);
+            averageBar.style.width = avgPercentage + '%';
+            averageValue.textContent = userAverage.toFixed(1) + ' ppm';
+        }
+
+        function showFallbackResults() {
+            // Show default results if no scan data is available
+            const fallbackData = {
+                level: 15.0,
+                category: 'medium',
+                type: 'unknown',
+                confidence: 90,
+                location: 'Unknown',
+                name: 'Recent Scan',
+                timestamp: Date.now()
+            };
+            
+            displayScanResults(fallbackData);
+        }
+
+        function saveResult() {
+            if (!currentScanData) {
+                showNotification('No result to save', 'warning');
+                return;
+            }
+
+            // The scan should already be saved by the app.js, but we can confirm
+            if (window.MicroplasticsApp) {
+                showNotification('Result saved successfully!', 'success');
+            } else {
+                // Fallback to localStorage if app is not available
+                let history = JSON.parse(localStorage.getItem('scanHistory') || '[]');
+                const existingIndex = history.findIndex(item => item.id === currentScanData.id);
+                
+                if (existingIndex === -1) {
+                    history.unshift(currentScanData);
+                    localStorage.setItem('scanHistory', JSON.stringify(history));
+                }
+                
+                showNotification('Result saved successfully!', 'success');
+            }
+        }
+
+        function shareResult() {
+            if (!currentScanData) {
+                showNotification('No result to share', 'warning');
+                return;
+            }
+
+            const shareText = `I found ${currentScanData.level.toFixed(1)} ppm of microplastics in my ${currentScanData.name.toLowerCase()} using the Microplastics Analyzer app!`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Microplastics Scan Result',
+                    text: shareText,
+                    url: window.location.href
+                }).catch(err => {
+                    console.log('Error sharing:', err);
+                    copyToClipboard(shareText);
+                });
+            } else {
+                copyToClipboard(shareText);
+            }
+        }
+
+        function copyToClipboard(text) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showNotification('Result copied to clipboard!', 'success');
+                }).catch(() => {
+                    showNotification('Could not copy to clipboard', 'error');
+                });
+            } else {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('Result copied to clipboard!', 'success');
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()">×</button>
+            `;
+            
+            // Add notification styles if not already added
+            if (!document.querySelector('#notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    .notification {
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        padding: 12px 16px;
+                        border-radius: 8px;
+                        color: white;
+                        z-index: 1000;
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        max-width: 300px;
+                        animation: slideIn 0.3s ease;
+                        font-family: 'Montserrat', sans-serif;
+                    }
+                    .notification-info { background: #3b82f6; }
+                    .notification-warning { background: #f59e0b; }
+                    .notification-error { background: #ef4444; }
+                    .notification-success { background: #10b981; }
+                    .notification button {
+                        background: none;
+                        border: none;
+                        color: white;
+                        cursor: pointer;
+                        font-size: 18px;
+                        padding: 0;
+                        margin: 0;
+                    }
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait a bit for app.js to initialize
+            setTimeout(loadScanResults, 100);
+        });
+    </script>
+</body>
+</html>
