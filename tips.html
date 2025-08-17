@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tips & Recommendations - Microplastics Analyzer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="mobile-container">
+        <!-- Status Bar -->
+        <div class="status-bar"></div>
+        
+        <!-- Header -->
+        <div class="header">
+            <button class="back-button" onclick="window.location.href='index.html'">←</button>
+            <h1>Tips & Recommendations</h1>
+            <p>Personalized advice based on your data</p>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTipsTab('priority')">Priority</button>
+            <button class="nav-tab" onclick="showTipsTab('general')">General</button>
+            <button class="nav-tab" onclick="showTipsTab('prevention')">Prevention</button>
+        </div>
+
+        <!-- Tips Content -->
+        <div class="main-content">
+            <!-- Priority Tips Tab -->
+            <div id="priority" class="tips-section active">
+                <!-- User Health Score -->
+                <div class="health-score-card">
+                    <div class="score-header">
+                        <h2>Your Health Score</h2>
+                        <div class="score-circle">
+                            <svg class="score-ring" viewBox="0 0 120 120">
+                                <circle class="score-bg" cx="60" cy="60" r="45"></circle>
+                                <circle class="score-progress" cx="60" cy="60" r="45" id="score-circle"></circle>
+                            </svg>
+                            <div class="score-text" id="health-score-display">85%</div>
+                        </div>
+                    </div>
+                    <div class="score-description" id="score-description">
+                        Loading your personalized health assessment...
+                    </div>
+                </div>
+
+                <!-- Priority Tips List -->
+                <div class="priority-tips" id="priority-tips-list">
+                    <div class="tip-loading">Analyzing your data to provide personalized tips...</div>
+                </div>
+            </div>
+
+            <!-- General Tips Tab -->
+            <div id="general" class="tips-section">
+                <div class="general-tips-container">
+                    <div class="tip-category">
+                        <h3>Food Storage & Preparation</h3>
+                        <div class="tip-grid">
+                            <div class="tip-card">
+                                <div class="tip-icon">🥗</div>
+                                <div class="tip-content">
+                                    <h4>Use Glass Containers</h4>
+                                    <p>Replace plastic food storage with glass or stainless steel containers to reduce microplastic exposure.</p>
+                                </div>
+                                <div class="tip-impact high">High Impact</div>
+                            </div>
+                            
+                            <div class="tip-card">
+                                <div class="tip-icon">🔥</div>
+                                <div class="tip-content">
+                                    <h4>Avoid Heating Plastics</h4>
+                                    <p>Never microwave plastic containers or leave them in hot cars, as heat increases microplastic release.</p>
+                                </div>
+                                <div class="tip-impact high">High Impact</div>
+                            </div>
+                            
+                            <div class="tip-card">
+                                <div class="tip-icon">🧽</div>
+                                <div class="tip-content">
+                                    <h4>Gentle Cleaning</h4>
+                                    <p>Use soft sponges on plastic containers to avoid creating scratches that release particles.</p>
+                                </div>
+                                <div class="tip-impact medium">Medium Impact</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tip-category">
+                        <h3>Drinking & Beverages</h3>
+                        <div class="tip-grid">
+                            <div class="tip-card">
+                                <div class="tip-icon">💧</div>
+                                <div class="tip-content">
+                                    <h4>Filter Your Water</h4>
+                                    <p>Use a quality water filter to remove microplastics from tap water before drinking.</p>
+                                </div>
+                                <div class="tip-impact high">High Impact</div>
+                            </div>
+                            
+                            <div class="tip-card">
+                                <div class="tip-icon">🍶</div>
+                                <div class="tip-content">
+                                    <h4>Reusable Bottles</h4>
+                                    <p>Switch to stainless steel or glass water bottles instead of single-use plastic bottles.</p>
+                                </div>
+                                <div class="tip-impact medium">Medium Impact</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tip-category">
+                        <h3>Shopping & Packaging</h3>
+                        <div class="tip-grid">
+                            <div class="tip-card">
+                                <div class="tip-icon">🛍️</div>
+                                <div class="tip-content">
+                                    <h4>Choose Minimal Packaging</h4>
+                                    <p>Buy fresh produce and bulk items to reduce contact with plastic packaging.</p>
+                                </div>
+                                <div class="tip-impact medium">Medium Impact</div>
+                            </div>
+                            
+                            <div class="tip-card">
+                                <div class="tip-icon">📦</div>
+                                <div class="tip-content">
+                                    <h4>Read Labels</h4>
+                                    <p>Look for "BPA-free" and "phthalate-free" labels when purchasing plastic items.</p>
+                                </div>
+                                <div class="tip-impact low">Low Impact</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prevention Tips Tab -->
+            <div id="prevention" class="tips-section">
+                <div class="prevention-container">
+                    <div class="prevention-header">
+                        <h2>Long-term Prevention Strategies</h2>
+                        <p>Build sustainable habits to minimize microplastic exposure over time.</p>
+                    </div>
+
+                    <div class="prevention-timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-marker immediate">1</div>
+                            <div class="timeline-content">
+                                <h3>Immediate Actions (This Week)</h3>
+                                <ul>
+                                    <li>Switch to a reusable water bottle</li>
+                                    <li>Stop microwaving plastic containers</li>
+                                    <li>Replace the most-used plastic food containers</li>
+                                    <li>Start using cloth shopping bags</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-marker short">2</div>
+                            <div class="timeline-content">
+                                <h3>Short-term Goals (This Month)</h3>
+                                <ul>
+                                    <li>Install a water filtration system</li>
+                                    <li>Replace all plastic food storage containers</li>
+                                    <li>Switch to bar soap instead of liquid in plastic bottles</li>
+                                    <li>Choose glass or metal packaging when possible</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-marker long">3</div>
+                            <div class="timeline-content">
+                                <h3>Long-term Changes (Next 3 Months)</h3>
+                                <ul>
+                                    <li>Audit all household plastics and replace systematically</li>
+                                    <li>Find plastic-free alternatives for personal care products</li>
+                                    <li>Establish relationships with low-packaging suppliers</li>
+                                    <li>Monitor and track your microplastic exposure trends</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="habit-tracker">
+                        <h3>Weekly Habit Tracker</h3>
+                        <div class="habits-grid" id="habit-tracker">
+                            <!-- Habit tracking will be added here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-item" onclick="window.location.href='scan.html'">
+                <div class="nav-icon">📷</div>
+                <div class="nav-label">Scan</div>
+            </div>
+
+            <div class="nav-item active">
+                <div class="nav-item" onclick="window.location.href='info.html'"></div>
+                <div class="nav-icon">ℹ️</div>
+
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Tips Page Specific Styles */
+        .tips-section {
+            display: none;
+            padding: 20px 0;
+        }
+        
+        .tips-section.active {
+            display: block;
+        }
+        
+        .health-score-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            text-align: center;
+            color: white;
+        }
+        
+        .score-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .score-header h2 {
+            margin: 0;
+            color: #ff7f50;
+            font-size: 18px;
+        }
+        
+        .score-circle {
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+        
+        .score-ring {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+        
+        .score-bg, .score-progress {
+            fill: none;
+            stroke-width: 6;
+        }
+        
+        .score-bg {
+            stroke: rgba(255, 255, 255, 0.2);
+        }
+        
+        .score-progress {
+            stroke: #ff7f50;
+            stroke-linecap: round;
+            stroke-dasharray: 283;
+            stroke-dashoffset: 0;
+            transition: stroke-dashoffset 1s ease;
+        }
+        
+        .score-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .score-description {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+        }
+        
+        .priority-tips {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .tip-loading {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 40px;
+        }
+        
+        .general-tips-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .tip-category h3 {
+            color: #ff7f50;
+            margin-bottom: 16px;
+            font-size: 16px;
+        }
+        
+        .tip-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .tip-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: white;
+        }
+        
+        .tip-icon {
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+        
+        .tip-content {
+            flex: 1;
+        }
+        
+        .tip-content h4 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .tip-content p {
+            margin: 0;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.4;
+        }
+        
+        .tip-impact {
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .tip-impact.high {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .tip-impact.medium {
+            background: #f59e0b;
+            color: white;
+        }
+        
+        .tip-impact.low {
+            background: #10b981;
+            color: white;
+        }
+        
+        .prevention-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .prevention-header {
+            text-align: center;
+            color: white;
+        }
+        
+        .prevention-header h2 {
+            color: #ff7f50;
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+        
+        .prevention-header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+        }
+        
+        .prevention-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .timeline-item {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+        
+        .timeline-marker {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .timeline-marker.immediate {
+            background: #ef4444;
+        }
+        
+        .timeline-marker.short {
+            background: #f59e0b;
+        }
+        
+        .timeline-marker.long {
+            background: #10b981;
+        }
+        
+        .timeline-content {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+        
+        .timeline-content h3 {
+            color: #ff7f50;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        
+        .timeline-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .timeline-content li {
+            padding: 4px 0;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+            position: relative;
+            padding-left: 16px;
+        }
+        
+        .timeline-content li:before {
+            content: "•";
+            color: #ff7f50;
+            position: absolute;
+            left: 0;
+        }
+        
+        .habit-tracker {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+        }
+        
+        .habit-tracker h3 {
+            color: #ff7f50;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .habits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        
+        .habit-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            color: white;
+        }
+        
+        .habit-name {
+            font-size: 12px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .habit-progress {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .habit-fill {
+            height: 100%;
+            background: #ff7f50;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+    </style>
+
+    <script>
+        // Tab navigation
+        function showTipsTab(tabName) {
+            document.querySelectorAll('.tips-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById(tabName).classList.add('active');
+            document.querySelector(`[onclick="showTipsTab('${tabName}')"]`).classList.add('active');
+        }
+
+        // Initialize habit tracker
+        function initializeHabitTracker() {
+            const habits = [
+                { name: 'Use Glass Containers', progress: 70 },
+                { name: 'Avoid Heating Plastics', progress: 90 },
+                { name: 'Filter Water', progress: 50 },
+                { name: 'Choose Minimal Packaging', progress: 60 }
+            ];
+            
+            const container = document.getElementById('habit-tracker');
+            container.innerHTML = '';
+            
+            habits.forEach(habit => {
+                const habitElement = document.createElement('div');
+                habitElement.className = 'habit-item';
+                habitElement.innerHTML = `
+                    <div class="habit-name">${habit.name}</div>
+                    <div class="habit-progress">
+                        <div class="habit-fill" style="width: ${habit.progress}%"></div>
+                    </div>
+                `;
+                container.appendChild(habitElement);
+            });
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeHabitTracker();
+        });
+    </script>
+</body>
+</html>

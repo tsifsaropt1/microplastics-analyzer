@@ -22,7 +22,7 @@
         <div class="nav-tabs">
             <button class="nav-tab active" onclick="showTab('overview')">Overview</button>
             <button class="nav-tab" onclick="showTab('history')">History</button>
-            <button class="nav-tab" onclick="showTab('tips')">Tips</button>
+            <button class="nav-tab" onclick="showTab('info')">Info</button>
         </div>
 
         <!-- Main Content -->
@@ -38,9 +38,9 @@
                         </div>
                     </div>
                     
-                    <div class="action-card" onclick="window.location.href='dashboard.html'">
+                    <div class="action-card" onclick="window.location.href='tips.html'">
                         <div class="action-card-header">
-                            <div class="action-title">View Dashboard</div>
+                            <div class="action-title">Tips</div>
                         </div>
                     </div>
                     
@@ -159,94 +159,140 @@
                 </div>
             </div>
 
-            <!-- TIPS TAB -->
-            <div id="tips" class="page-section">
-                <!-- Circular Progress -->
-                <div class="circular-progress">
-                    <svg class="progress-ring" viewBox="0 0 120 120">
-                        <circle class="progress-circle progress-bg" cx="60" cy="60" r="50"></circle>
-                        <circle class="progress-circle progress-bar-circle" cx="60" cy="60" r="50"></circle>
-                    </svg>
-                    <div class="progress-text">75%</div>
-                </div>
+            <!-- INFO TAB -->
+<!-- INFO TAB -->
+<div id="info" class="page-section">
+    <!-- Health Impact Header -->
+    <div class="progress-section" style="text-align: center; margin-bottom: 24px;">
+        <h2 style="font-size: 20px; color: #374151; margin-bottom: 8px; font-weight: 600;">Microplastics & Human Health</h2>
+        <p style="font-size: 14px; color: #6b7280;">Understanding the health implications of microplastic exposure</p>
+    </div>
 
-                <!-- Progress Indicators -->
-                <div class="list-container">
-                    <div class="list-item">
-                        <div class="list-icon" style="background: #10b981;">●</div>
-                        <div class="list-content">
-                            <div class="list-title">Reduce Plastic Use</div>
-                            <div class="list-subtitle">Choose reusable containers</div>
-                        </div>
-                        <div class="progress-bar" style="width: 80px;">
-                            <div class="progress-fill" style="background: #fbbf24; width: 80%"></div>
-                        </div>
+    <!-- Health Risk Categories -->
+    <div class="action-cards">
+        <div class="action-card" style="background: #ef4444; color: white; height: auto; padding: 20px;">
+            <div class="action-card-header" style="flex-direction: column; align-items: flex-start;">
+                <div class="action-title" style="margin-bottom: 16px;">Critical Health Concerns</div>
+                <div style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
+                    <div style="background: rgba(255, 255, 255, 0.15); border-radius: 8px; padding: 12px;">
+                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Organ Accumulation</div>
+                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Research has identified microplastic particles in liver, kidney, and brain tissue samples.</div>
                     </div>
-                    <div class="list-item">
-                        <div class="list-icon" style="background: #10b981;">●</div>
-                        <div class="list-content">
-                            <div class="list-title">Proper Disposal</div>
-                            <div class="list-subtitle">Follow recycling guidelines</div>
-                        </div>
-                        <div class="progress-bar" style="width: 80px;">
-                            <div class="progress-fill" style="background: #10b981; width: 65%"></div>
-                        </div>
+                    <div style="background: rgba(255, 255, 255, 0.15); border-radius: 8px; padding: 12px;">
+                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Blood Contamination</div>
+                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Studies have detected plastic particles circulating in human bloodstream.</div>
                     </div>
-                    <div class="list-item">
-                        <div class="list-icon" style="background: #10b981;">●</div>
-                        <div class="list-content">
-                            <div class="list-title">Scan Accuracy</div>
-                            <div class="list-subtitle">Good lighting helps detection</div>
-                        </div>
-                        <div class="progress-bar" style="width: 80px;">
-                            <div class="progress-fill" style="background: #f97316; width: 90%"></div>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-icon" style="background: #10b981;">●</div>
-                        <div class="list-content">
-                            <div class="list-title">Environmental Impact</div>
-                            <div class="list-subtitle">Track your carbon footprint</div>
-                        </div>
-                        <div class="progress-bar" style="width: 80px;">
-                            <div class="progress-fill" style="background: #22c55e; width: 45%"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tips Cards -->
-                <div class="action-cards" style="margin-top: 24px;">
-                    <div class="action-card">
-                        <div class="action-card-header">
-                            <div class="action-title">Best Practices</div>
-                        </div>
-                    </div>
-                    <div class="action-card">
-                        <div class="action-card-header">
-                            <div class="action-title">Eco-Friendly Tips</div>
-                        </div>
+                    <div style="background: rgba(255, 255, 255, 0.15); border-radius: 8px; padding: 12px;">
+                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Placental Transfer</div>
+                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Microplastics can cross the placental barrier, affecting fetal development.</div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div class="action-card" style="background: #f59e0b; color: white; height: auto; padding: 20px;">
+            <div class="action-card-header" style="flex-direction: column; align-items: flex-start;">
+                <div class="action-title" style="margin-bottom: 16px;">Respiratory & Digestive Impact</div>
+                <div style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
+                    <div style="background: rgba(255, 255, 255, 0.15); border-radius: 8px; padding: 12px;">
+                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Lung Inflammation</div>
+                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Airborne microplastic particles cause chronic respiratory irritation.</div>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.15); border-radius: 8px; padding: 12px;">
+                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Gut Microbiome</div>
+                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Ingested particles may alter beneficial bacteria populations.</div>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.15); border-radius: 8px; padding: 12px;">
+                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Intestinal Barrier</div>
+                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Chronic exposure may weaken the intestinal lining integrity.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-card" style="background: #6b7280; color: white; height: auto; padding: 20px;">
+            <div class="action-card-header" style="flex-direction: column; align-items: flex-start;">
+                <div class="action-title" style="margin-bottom: 16px;">Cellular & Hormonal Effects</div>
+                <div style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
+                    <div style="background: rgba(255, 255, 255, 0.15); border-radius: 8px; padding: 12px;">
+                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Endocrine Disruption</div>
+                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Chemical additives interfere with hormone production and function.</div>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.15); border-radius: 8px; padding: 12px;">
+                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Oxidative Stress</div>
+                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Microplastic exposure accelerates cellular damage and aging.</div>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.15); border-radius: 8px; padding: 12px;">
+                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Immune Response</div>
+                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Foreign particles trigger chronic inflammatory responses.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exposure Sources -->
+    <div class="progress-section">
+        <div class="progress-title">Primary Exposure Sources</div>
+        <div class="progress-item">
+            <div class="progress-label">Food Packaging</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="background: #ef4444; width: 90%"></div>
+            </div>
+        </div>
+        <div class="progress-item">
+            <div class="progress-label">Drinking Water</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="background: #ef4444; width: 85%"></div>
+            </div>
+        </div>
+        <div class="progress-item">
+            <div class="progress-label">Seafood</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="background: #f59e0b; width: 65%"></div>
+            </div>
+        </div>
+        <div class="progress-item">
+            <div class="progress-label">Airborne</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="background: #6b7280; width: 55%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">5g</div>
+            <div class="stat-label">Weekly Consumption</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">83%</div>
+            <div class="stat-label">Tap Water Contaminated</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">90%</div>
+            <div class="stat-label">Sea Salt Brands</div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <button class="action-btn primary" onclick="window.location.href='tips.html'">View Protection Tips</button>
+        <button class="action-btn secondary" onclick="window.location.href='scan.html'">Start Scanning</button>
+    </div>
+</div>
+
         <!-- Bottom Navigation -->
         <div class="bottom-nav">
-            <div class="nav-item active">
-                <div class="nav-icon">🏠</div>
-                <div class="nav-label">Home</div>
-            </div>
+
             <div class="nav-item" onclick="window.location.href='scan.html'">
                 <div class="nav-icon">📷</div>
                 <div class="nav-label">Scan</div>
             </div>
-            <div class="nav-item" onclick="showTab('history')">
-                <div class="nav-icon">📊</div>
-                <div class="nav-label">History</div>
-            </div>
-            <div class="nav-item" onclick="window.location.href='settings.html'">
-                <div class="nav-icon">⚙️</div>
-                <div class="nav-label">Settings</div>
+
+            <div class="nav-item" onclick="window.location.href='info.html'">
+                <div class="nav-icon">ℹ️</div>
             </div>
         </div>
     </div>

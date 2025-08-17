@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information - Microplastics Analyzer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Mobile Container -->
+    <div class="mobile-container">
+        <!-- Status Bar -->
+        <div class="status-bar"></div>
+        
+        <!-- Header -->
+        <div class="header">
+            <button class="back-button" onclick="window.location.href='index.html'">←</button>
+            <h1>Information</h1>
+            <p>Research partners and microplastics insights</p>
+        </div>
+
+        <div class="nav-tabs">
+    <!-- Empty nav-tabs just for the wave effect -->
+</div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sponsors/Partners Section -->
+            <div class="sponsors-header">
+                <h2>Project Information</h2>
+                <p>iGEM team, sponsors, and latest research insights</p>
+            </div>
+
+            <!-- Category Pills -->
+            <div class="sponsor-pills">
+                <div class="pill active" data-tab="igem">iGEM</div>
+                <div class="pill" data-tab="sponsors">Sponsors</div>
+                <div class="pill" data-tab="research">Research</div>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="tab-content">
+                <!-- iGEM Tab -->
+                <div id="igem-tab" class="tab-section active">
+                    <div class="partner-card featured">
+                        <div class="partner-badge">iGEM ATHENS 2025</div>
+                        <div class="partner-image">
+                            <div class="partner-logo">🧬</div>
+                        </div>
+                        <div class="partner-content">
+                            <h3>Microplastics Detection & Analysis</h3>
+                            <p>Our iGEM team is developing innovative biosensors for real-time microplastic detection in environmental samples. Using synthetic biology approaches, we're creating engineered organisms capable of identifying and quantifying microplastic contamination in water sources, food products, and biological systems.</p>
+                            <div class="project-highlights">
+                                <div class="highlight-item">🔬 Biosensor Development</div>
+                                <div class="highlight-item">🌊 Environmental Monitoring</div>
+                                <div class="highlight-item">🏥 Health Impact Assessment</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="igem-link-card">
+                        <div class="link-content">
+                            <h3>Visit Our iGEM Project Page</h3>
+                            <p>Learn more about our team, methodology, and research progress</p>
+                            <a href="https://2025.igem.wiki/athens" class="external-link" target="_blank">
+                                iGEM Athens 2025 →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sponsors Tab -->
+                <div id="sponsors-tab" class="tab-section">
+                    <div class="sponsors-thanks">
+                        <h3>Thank You to Our Sponsors</h3>
+                        <p>We are grateful to our sponsors and partners who make our microplastics research possible. Their support enables us to develop cutting-edge detection technologies and contribute to environmental health solutions.</p>
+                    </div>
+
+                    <div class="sponsor-links">
+                        <div class="sponsor-card">
+                            <div class="sponsor-logo">🎓</div>
+                            <div class="sponsor-info">
+                                <h4>University Research Grant</h4>
+                                <p>Supporting innovative student research in environmental science</p>
+                                <a href="#" class="sponsor-link">Visit Website →</a>
+                            </div>
+                        </div>
+
+                        <div class="sponsor-card">
+                            <div class="sponsor-logo">🏢</div>
+                            <div class="sponsor-info">
+                                <h4>Environmental Technology Corp</h4>
+                                <p>Leading provider of analytical instruments for environmental monitoring</p>
+                                <a href="#" class="sponsor-link">Learn More →</a>
+                            </div>
+                        </div>
+
+                        <div class="sponsor-card">
+                            <div class="sponsor-logo">🌍</div>
+                            <div class="sponsor-info">
+                                <h4>Green Future Foundation</h4>
+                                <p>Non-profit organization dedicated to combating plastic pollution</p>
+                                <a href="#" class="sponsor-link">Explore Mission →</a>
+                            </div>
+                        </div>
+
+                        <div class="sponsor-card">
+                            <div class="sponsor-logo">🔬</div>
+                            <div class="sponsor-info">
+                                <h4>Scientific Equipment Solutions</h4>
+                                <p>Providing advanced laboratory equipment for microplastic analysis</p>
+                                <a href="#" class="sponsor-link">View Products →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Research Tab -->
+                <div id="research-tab" class="tab-section">
+                    <div class="research-intro">
+                        <h3>Latest Microplastics Research</h3>
+                        <p>Stay updated with the most recent scientific discoveries and breakthroughs in microplastic detection, health impacts, and environmental solutions.</p>
+                    </div>
+
+                    <div class="research-cards">
+                        <div class="research-card">
+                            <div class="research-badge">NEW STUDY</div>
+                            <div class="research-content">
+                                <h4>Microplastics in Human Blood</h4>
+                                <p>Recent research reveals widespread presence of plastic particles in human bloodstream, raising concerns about long-term health effects.</p>
+                                <a href="#" class="research-link">Read Study →</a>
+                            </div>
+                        </div>
+
+                        <div class="research-card">
+                            <div class="research-badge">BREAKTHROUGH</div>
+                            <div class="research-content">
+                                <h4>Advanced Detection Methods</h4>
+                                <p>Novel spectroscopic techniques enable rapid identification of microplastics in complex environmental samples.</p>
+                                <a href="#" class="research-link">View Research →</a>
+                            </div>
+                        </div>
+
+                        <div class="research-card">
+                            <div class="research-badge">REVIEW</div>
+                            <div class="research-content">
+                                <h4>Health Impact Assessment</h4>
+                                <p>Comprehensive review of current knowledge on microplastic toxicity and human health implications.</p>
+                                <a href="#" class="research-link">Access Paper →</a>
+                            </div>
+                        </div>
+
+                        <div class="research-card">
+                            <div class="research-badge">INNOVATION</div>
+                            <div class="research-content">
+                                <h4>Biodegradation Solutions</h4>
+                                <p>Engineered microorganisms show promise for breaking down microplastic pollution in marine environments.</p>
+                                <a href="#" class="research-link">Learn More →</a>
+                            </div>
+                        </div>
+
+                        <div class="research-card">
+                            <div class="research-badge">DATA</div>
+                            <div class="research-content">
+                                <h4>Global Contamination Map</h4>
+                                <p>Interactive database tracking microplastic contamination levels across different regions and ecosystems.</p>
+                                <a href="#" class="research-link">Explore Data →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-item" onclick="window.location.href='index.html'">
+                <div class="nav-icon">🏠</div>
+                <div class="nav-label">Home</div>
+            </div>
+            <div class="nav-item" onclick="window.location.href='scan.html'">
+                <div class="nav-icon">📷</div>
+                <div class="nav-label">Scan</div>
+            </div>
+            <div class="nav-item active">
+                <div class="nav-icon" style="background: white; color: #272757; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold;">ⓘ</div>
+                <div class="nav-label">Info</div>
+            </div>
+            <div class="nav-item" onclick="window.location.href='tips.html'">
+                <div class="nav-icon">💡</div>
+                <div class="nav-label">Tips</div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+       
+        /* Info Page Specific Styles */
+        .sponsors-header {
+            text-align: center;
+            margin-bottom: 24px;
+            color: white;
+        }
+
+        .sponsors-header h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #ff7f50;
+        }
+
+        .sponsors-header p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .sponsor-pills {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            justify-content: center;
+        }
+
+        .pill {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .pill.active {
+            background: #ff7f50;
+            color: white;
+        }
+
+        .tab-content {
+            margin-bottom: 32px;
+        }
+
+        .tab-section {
+            display: none;
+        }
+
+        .tab-section.active {
+            display: block;
+        }
+
+        /* iGEM Tab Styles */
+        .partner-card.featured {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            padding: 24px;
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .partner-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .partner-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            margin-bottom: 16px;
+        }
+
+        .partner-logo {
+            font-size: 32px;
+        }
+
+        .partner-content h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: white;
+        }
+
+        .partner-content p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .project-highlights {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .highlight-item {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .igem-link-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .link-content h3 {
+            color: #ff7f50;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .link-content p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .external-link {
+            display: inline-block;
+            background: #ff7f50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .external-link:hover {
+            background: #ff6b35;
+            transform: translateY(-1px);
+        }
+
+        /* Sponsors Tab Styles */
+        .sponsors-thanks {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .sponsors-thanks h3 {
+            color: #ff7f50;
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .sponsors-thanks p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .sponsor-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sponsor-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .sponsor-logo {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .sponsor-info h4 {
+            color: white;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .sponsor-info p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .sponsor-link {
+            color: #ff7f50;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Research Tab Styles */
+        .research-intro {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .research-intro h3 {
+            color: #ff7f50;
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .research-intro p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .research-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .research-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            transition: all 0.2s;
+        }
+
+        .research-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .research-badge {
+            display: inline-block;
+            background: #ff7f50;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .research-content h4 {
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .research-content p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .research-link {
+            color: #ff7f50;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+        }
+    </style>
+
+    <script>
+        // Tab switching functionality
+        document.querySelectorAll('.pill').forEach(pill => {
+            pill.addEventListener('click', function() {
+                const targetTab = this.getAttribute('data-tab');
+                
+                // Remove active class from all pills and tabs
+                document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+                document.querySelectorAll('.tab-section').forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked pill and corresponding tab
+                this.classList.add('active');
+                document.getElementById(targetTab + '-tab').classList.add('active');
+            });
+        });
+
+        // Link click handlers
+        document.querySelectorAll('.external-link, .sponsor-link, .research-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Add click animation
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 100);
+                
+                // Log the link for demonstration (replace with actual navigation)
+                console.log('Link clicked:', this.textContent);
+                // window.open(this.href, '_blank'); // Uncomment for real links
+            });
+        });
+    </script>
+</body>
+</html>
