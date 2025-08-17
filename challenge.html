@@ -26,66 +26,133 @@
         <div class="main-content">
             <div class="challenge-header">
                 <h2>Today's Mission</h2>
-                <div class="challenge-date">August 16, 2025</div>
+                <div class="challenge-date">August 18, 2025</div>
             </div>
             
-            <div class="challenge-card">
-                <div class="challenge-icon">🌱</div>
-                <h3>Plastic-Free Lunch</h3>
-                <p>Scan 3 items from your lunch to check for microplastics and build awareness about plastic contamination in food.</p>
+            <div class="challenge-card" id="current-challenge">
+                <div class="challenge-icon">🍽️</div>
+                <h3>Breakfast Safety Check</h3>
+                <p>Scan 3 food items from your breakfast to assess microplastic levels in your morning meal.</p>
                 
                 <div class="challenge-progress">
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: 33%"></div>
+                        <div class="progress-fill" style="width: 0%"></div>
                     </div>
-                    <span>1/3 completed</span>
+                    <span>0/3 completed</span>
                 </div>
                 
                 <div class="challenge-reward">
                     <span class="reward-icon">⭐</span>
-                    <span>+50 points</span>
-                    <span class="bonus-text">+ 25 bonus points for completion!</span>
+                    <span>+30 points</span>
+                    <span class="bonus-text">+ 15 bonus points for completion!</span>
                 </div>
             </div>
 
             <div class="challenge-items">
-                <h3>Items to Scan</h3>
-                <div class="item-list">
-                    <div class="challenge-item completed">
-                        <div class="item-icon">✅</div>
-                        <div class="item-content">
-                            <div class="item-name">Food Container</div>
-                            <div class="item-result">Medium Level - 34 ppm</div>
-                        </div>
-                    </div>
-                    
+                <h3>Food Items to Scan</h3>
+                <div class="item-list" id="challenge-items">
                     <div class="challenge-item pending">
-                        <div class="item-icon">📦</div>
+                        <div class="item-icon">🥛</div>
                         <div class="item-content">
-                            <div class="item-name">Packaging/Wrapper</div>
+                            <div class="item-name">Milk or Dairy Product</div>
                             <div class="item-status">Not scanned</div>
                         </div>
                         <button class="scan-item-btn" onclick="window.location.href='scan.html'">Scan</button>
                     </div>
                     
                     <div class="challenge-item pending">
-                        <div class="item-icon">🥤</div>
+                        <div class="item-icon">🍞</div>
                         <div class="item-content">
-                            <div class="item-name">Beverage Container</div>
+                            <div class="item-name">Bread or Cereal</div>
                             <div class="item-status">Not scanned</div>
                         </div>
                         <button class="scan-item-btn" onclick="window.location.href='scan.html'">Scan</button>
                     </div>
+
+                    <div class="challenge-item pending">
+                        <div class="item-icon">🍯</div>
+                        <div class="item-content">
+                            <div class="item-name">Honey or Spread</div>
+                            <div class="item-status">Not scanned</div>
+                        </div>
+                        <button class="scan-item-btn" onclick="window.location.href='scan.html'">Scan</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Challenge Generator -->
+            <div class="challenge-generator">
+                <button class="action-btn secondary" onclick="generateNewChallenge()">
+                    🎲 Try Different Challenge
+                </button>
+            </div>
+
+            <!-- Rewards System -->
+            <div class="rewards-section">
+                <h3>🏆 Your Rewards</h3>
+                <div class="rewards-stats">
+                    <div class="reward-stat">
+                        <div class="stat-number" id="total-points">245</div>
+                        <div class="stat-label">Total Points</div>
+                    </div>
+                    <div class="reward-stat">
+                        <div class="stat-number" id="challenges-completed">8</div>
+                        <div class="stat-label">Challenges Done</div>
+                    </div>
+                    <div class="reward-stat">
+                        <div class="stat-number" id="current-level">3</div>
+                        <div class="stat-label">Level</div>
+                    </div>
+                </div>
+                <div class="level-progress">
+                    <div class="level-bar">
+                        <div class="level-fill" style="width: 65%"></div>
+                    </div>
+                    <span>65/100 to Level 4</span>
+                </div>
+            </div>
+
+            <!-- Achievement Badges -->
+            <div class="achievements-section">
+                <h3>🎖️ Achievement Badges</h3>
+                <div class="badges-grid" id="badges-grid">
+                    <div class="badge earned">
+                        <div class="badge-icon">🥇</div>
+                        <div class="badge-name">First Scan</div>
+                    </div>
+                    <div class="badge earned">
+                        <div class="badge-icon">🔥</div>
+                        <div class="badge-name">Week Streak</div>
+                    </div>
+                    <div class="badge earned">
+                        <div class="badge-icon">🍽️</div>
+                        <div class="badge-name">Breakfast Expert</div>
+                    </div>
+                    <div class="badge locked">
+                        <div class="badge-icon">🌟</div>
+                        <div class="badge-name">Level 5</div>
+                    </div>
+                    <div class="badge locked">
+                        <div class="badge-icon">🐟</div>
+                        <div class="badge-name">Seafood Specialist</div>
+                    </div>
+                    <div class="badge locked">
+                        <div class="badge-icon">👶</div>
+                        <div class="badge-name">Child Safety</div>
+                    </div>
+                </div>
+                <div class="badge-progress">
+                    <p>Next badge: Complete 5 seafood scans</p>
                 </div>
             </div>
 
             <div class="challenge-tips">
                 <h3>💡 Challenge Tips</h3>
-                <ul>
-                    <li>Look for items you actually ate today</li>
-                    <li>Scan different types of containers</li>
-                    <li>Compare results between materials</li>
-                    <li>Share findings with friends for bonus points</li>
+                <ul id="challenge-tips-list">
+                    <li>Focus on processed vs fresh foods</li>
+                    <li>Check packaging dates</li>
+                    <li>Compare organic vs conventional</li>
+                    <li>Note storage container materials</li>
                 </ul>
             </div>
             
@@ -118,19 +185,361 @@
 
         <!-- Bottom Navigation -->
         <div class="bottom-nav">
-            <div class="nav-item" onclick="window.location.href='index.html'">
-            </div>
+
             <div class="nav-item" onclick="window.location.href='scan.html'">
                 <div class="nav-icon">📷</div>
                 <div class="nav-label">Scan</div>
             </div>
             <div class="nav-item" onclick="window.location.href='info.html'">
-                <div class="nav-icon">ℹ️ </div>
-            </div>
+                <div class="nav-icon" style="background: white; color: #272757; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold;">ⓘ</div>
+                <div class="nav-label">Info</div>
+
         </div>
     </div>
 
+    <style>
+        /* Use external styles.css file - no inline styles to maintain original design */
+        
+        /* Only add new styles for rewards system */
+        .challenge-generator {
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .rewards-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .rewards-section h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: #ff7f50;
+            text-align: center;
+        }
+
+        .rewards-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 16px;
+        }
+
+        .reward-stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 18px;
+            font-weight: bold;
+            color: #FFD700;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .level-progress {
+            text-align: center;
+        }
+
+        .level-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .level-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .level-progress span {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Achievement Badges Styles */
+        .achievements-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .achievements-section h3 {
+            font-size: 16px;
+            margin-bottom: 16px;
+            color: #ff7f50;
+            text-align: center;
+        }
+
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px 8px;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .badge.earned {
+            background: rgba(255, 215, 0, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .badge.locked {
+            background: rgba(255, 255, 255, 0.05);
+            opacity: 0.6;
+        }
+
+        .badge-icon {
+            font-size: 24px;
+            margin-bottom: 6px;
+        }
+
+        .badge.locked .badge-icon {
+            filter: grayscale(100%);
+        }
+
+        .badge-name {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+        }
+
+        .badge.earned .badge-name {
+            color: #FFD700;
+        }
+
+        .badge-progress {
+            text-align: center;
+        }
+
+        .badge-progress p {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0;
+        }
+    </style>
+
     <script>
+        // Food-only challenges
+        const foodChallenges = [
+            {
+                icon: "🍽️",
+                title: "Breakfast Safety Check",
+                description: "Scan 3 food items from your breakfast to assess microplastic levels in your morning meal.",
+                items: [
+                    { icon: "🥛", name: "Milk or Dairy Product" },
+                    { icon: "🍞", name: "Bread or Cereal" },
+                    { icon: "🍯", name: "Honey or Spread" }
+                ],
+                tips: [
+                    "Focus on processed vs fresh foods",
+                    "Check packaging dates",
+                    "Compare organic vs conventional",
+                    "Note storage container materials"
+                ],
+                points: 30,
+                bonus: 15
+            },
+            {
+                icon: "🥗",
+                title: "Lunch Investigation",
+                description: "Scan 4 different food items from your lunch to understand microplastic contamination in midday meals.",
+                items: [
+                    { icon: "🥩", name: "Meat or Protein" },
+                    { icon: "🥬", name: "Vegetables or Salad" },
+                    { icon: "🍚", name: "Rice or Grains" },
+                    { icon: "🧀", name: "Cheese or Dairy" }
+                ],
+                tips: [
+                    "Test foods stored in plastic",
+                    "Compare fresh vs packaged items",
+                    "Check expiration dates",
+                    "Note processing levels"
+                ],
+                points: 40,
+                bonus: 20
+            },
+            {
+                icon: "🍯",
+                title: "Pantry Staples Audit",
+                description: "Scan 3 common pantry foods to check microplastic levels in everyday cooking ingredients.",
+                items: [
+                    { icon: "🧂", name: "Salt or Seasoning" },
+                    { icon: "🍯", name: "Honey or Syrup" },
+                    { icon: "🫒", name: "Oil or Vinegar" }
+                ],
+                tips: [
+                    "Check sea salt vs table salt",
+                    "Compare different honey sources",
+                    "Test oils in plastic vs glass",
+                    "Note production methods"
+                ],
+                points: 30,
+                bonus: 15
+            },
+            {
+                icon: "🍕",
+                title: "Dinner Deep Dive",
+                description: "Scan 4 components of your dinner to assess microplastic exposure in evening meals.",
+                items: [
+                    { icon: "🍖", name: "Main Protein Dish" },
+                    { icon: "🥔", name: "Potato or Starch" },
+                    { icon: "🥕", name: "Cooked Vegetables" },
+                    { icon: "🍷", name: "Beverage" }
+                ],
+                tips: [
+                    "Test home-cooked vs takeout",
+                    "Compare cooking methods",
+                    "Check food storage methods",
+                    "Note preparation surfaces"
+                ],
+                points: 40,
+                bonus: 20
+            },
+            {
+                icon: "🐟",
+                title: "Seafood Safety Scan",
+                description: "Scan 3 seafood items to understand microplastic accumulation in marine food sources.",
+                items: [
+                    { icon: "🐟", name: "Fish Fillet" },
+                    { icon: "🦐", name: "Shellfish" },
+                    { icon: "🍣", name: "Processed Seafood" }
+                ],
+                tips: [
+                    "Compare wild vs farmed fish",
+                    "Check different ocean regions",
+                    "Test fresh vs frozen options",
+                    "Note fish size and age"
+                ],
+                points: 35,
+                bonus: 18
+            },
+            {
+                icon: "🍼",
+                title: "Baby Food Safety",
+                description: "Scan 4 baby food items to ensure safe microplastic levels for developing children.",
+                items: [
+                    { icon: "🍼", name: "Formula or Baby Milk" },
+                    { icon: "🥕", name: "Baby Vegetables" },
+                    { icon: "🍌", name: "Baby Fruit Puree" },
+                    { icon: "🍚", name: "Baby Cereal" }
+                ],
+                tips: [
+                    "Compare homemade vs commercial",
+                    "Check organic vs conventional",
+                    "Test glass vs plastic packaging",
+                    "Note heating methods used"
+                ],
+                points: 50,
+                bonus: 25
+            }
+        ];
+
+        let currentChallengeIndex = 0;
+
+        // Achievement system
+        const achievements = [
+            {
+                id: 'first_scan',
+                icon: '🥇',
+                name: 'First Scan',
+                description: 'Complete your first food scan',
+                requirement: 1,
+                type: 'scans',
+                earned: true
+            },
+            {
+                id: 'week_streak',
+                icon: '🔥',
+                name: 'Week Streak',
+                description: 'Complete challenges for 7 days in a row',
+                requirement: 7,
+                type: 'streak',
+                earned: true
+            },
+            {
+                id: 'breakfast_expert',
+                icon: '🍽️',
+                name: 'Breakfast Expert',
+                description: 'Complete 3 breakfast challenges',
+                requirement: 3,
+                type: 'breakfast',
+                earned: true
+            },
+            {
+                id: 'level_5',
+                icon: '🌟',
+                name: 'Level 5',
+                description: 'Reach level 5',
+                requirement: 5,
+                type: 'level',
+                earned: false
+            },
+            {
+                id: 'seafood_specialist',
+                icon: '🐟',
+                name: 'Seafood Specialist',
+                description: 'Complete 5 seafood scans',
+                requirement: 5,
+                type: 'seafood',
+                earned: false
+            },
+            {
+                id: 'child_safety',
+                icon: '👶',
+                name: 'Child Safety',
+                description: 'Complete baby food safety challenge',
+                requirement: 1,
+                type: 'baby_food',
+                earned: false
+            },
+            {
+                id: 'challenge_master',
+                icon: '🏆',
+                name: 'Challenge Master',
+                description: 'Complete 20 challenges',
+                requirement: 20,
+                type: 'challenges',
+                earned: false
+            },
+            {
+                id: 'scanner_pro',
+                icon: '📱',
+                name: 'Scanner Pro',
+                description: 'Complete 50 food scans',
+                requirement: 50,
+                type: 'scans',
+                earned: false
+            },
+            {
+                id: 'health_guardian',
+                icon: '💪',
+                name: 'Health Guardian',
+                description: 'Complete all challenge types',
+                requirement: 6,
+                type: 'variety',
+                earned: false
+            }
+        ];
+
         function skipChallenge() {
             if (confirm('Are you sure you want to skip today\'s challenge? You won\'t earn the reward points.')) {
                 alert('Challenge skipped. Come back tomorrow for a new challenge!');
@@ -138,16 +547,58 @@
             }
         }
 
+        function generateNewChallenge() {
+            currentChallengeIndex = (currentChallengeIndex + 1) % foodChallenges.length;
+            const challenge = foodChallenges[currentChallengeIndex];
+            
+            // Update challenge card
+            const challengeCard = document.getElementById('current-challenge');
+            challengeCard.innerHTML = `
+                <div class="challenge-icon">${challenge.icon}</div>
+                <h3>${challenge.title}</h3>
+                <p>${challenge.description}</p>
+                
+                <div class="challenge-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <span>0/${challenge.items.length} completed</span>
+                </div>
+                
+                <div class="challenge-reward">
+                    <span class="reward-icon">⭐</span>
+                    <span>+${challenge.points} points</span>
+                    <span class="bonus-text">+ ${challenge.bonus} bonus points for completion!</span>
+                </div>
+            `;
+            
+            // Update items list
+            const itemsList = document.getElementById('challenge-items');
+            itemsList.innerHTML = challenge.items.map(item => `
+                <div class="challenge-item pending">
+                    <div class="item-icon">${item.icon}</div>
+                    <div class="item-content">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-status">Not scanned</div>
+                    </div>
+                    <button class="scan-item-btn" onclick="window.location.href='scan.html'">Scan</button>
+                </div>
+            `).join('');
+            
+            // Update tips
+            const tipsList = document.getElementById('challenge-tips-list');
+            tipsList.innerHTML = challenge.tips.map(tip => `<li>${tip}</li>`).join('');
+        }
+
         // Update progress when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            // Simulate challenge progress
             updateChallengeProgress();
+            updateRewardsDisplay();
         });
 
         function updateChallengeProgress() {
-            // This would normally come from your backend/localStorage
-            const completedItems = 1;
-            const totalItems = 3;
+            const completedItems = 0;
+            const totalItems = foodChallenges[currentChallengeIndex].items.length;
             const progressPercent = (completedItems / totalItems) * 100;
             
             const progressBar = document.querySelector('.progress-fill');
@@ -160,6 +611,91 @@
             if (progressText) {
                 progressText.textContent = `${completedItems}/${totalItems} completed`;
             }
+        }
+
+        function updateRewardsDisplay() {
+            // This would normally come from your backend/localStorage
+            const totalPoints = 245;
+            const challengesCompleted = 8;
+            const currentLevel = Math.floor(totalPoints / 100) + 1;
+            const pointsInCurrentLevel = totalPoints % 100;
+            
+            document.getElementById('total-points').textContent = totalPoints;
+            document.getElementById('challenges-completed').textContent = challengesCompleted;
+            document.getElementById('current-level').textContent = currentLevel;
+            
+            const levelFill = document.querySelector('.level-fill');
+            const levelText = document.querySelector('.level-progress span');
+            
+            if (levelFill) {
+                levelFill.style.width = pointsInCurrentLevel + '%';
+            }
+            
+            if (levelText) {
+                levelText.textContent = `${pointsInCurrentLevel}/100 to Level ${currentLevel + 1}`;
+            }
+
+            // Update achievements display
+            updateAchievementsDisplay();
+        }
+
+        function updateAchievementsDisplay() {
+            const badgesGrid = document.getElementById('badges-grid');
+            
+            // Show first 6 achievements in grid
+            const visibleAchievements = achievements.slice(0, 6);
+            
+            badgesGrid.innerHTML = visibleAchievements.map(achievement => `
+                <div class="badge ${achievement.earned ? 'earned' : 'locked'}">
+                    <div class="badge-icon">${achievement.icon}</div>
+                    <div class="badge-name">${achievement.name}</div>
+                </div>
+            `).join('');
+
+            // Update next badge progress
+            const nextBadge = achievements.find(a => !a.earned);
+            const progressText = document.querySelector('.badge-progress p');
+            
+            if (nextBadge && progressText) {
+                progressText.textContent = `Next badge: ${nextBadge.description}`;
+            }
+        }
+
+        function checkAchievements(userStats) {
+            // This function would check if user has unlocked new achievements
+            // Based on their stats (scans completed, challenges done, etc.)
+            
+            achievements.forEach(achievement => {
+                if (!achievement.earned) {
+                    let unlocked = false;
+                    
+                    switch (achievement.type) {
+                        case 'scans':
+                            unlocked = (userStats.totalScans || 0) >= achievement.requirement;
+                            break;
+                        case 'challenges':
+                            unlocked = (userStats.challengesCompleted || 0) >= achievement.requirement;
+                            break;
+                        case 'level':
+                            unlocked = (userStats.currentLevel || 0) >= achievement.requirement;
+                            break;
+                        case 'streak':
+                            unlocked = (userStats.currentStreak || 0) >= achievement.requirement;
+                            break;
+                        // Add more specific achievement types as needed
+                    }
+                    
+                    if (unlocked) {
+                        achievement.earned = true;
+                        showAchievementNotification(achievement);
+                    }
+                }
+            });
+        }
+
+        function showAchievementNotification(achievement) {
+            // Show a notification when user unlocks a new achievement
+            alert(`🎉 Achievement Unlocked!\n\n${achievement.icon} ${achievement.name}\n${achievement.description}`);
         }
     </script>
 </body>

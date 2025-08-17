@@ -22,7 +22,7 @@
         <div class="nav-tabs">
             <button class="nav-tab active" onclick="showTab('overview')">Overview</button>
             <button class="nav-tab" onclick="showTab('history')">History</button>
-            <button class="nav-tab" onclick="showTab('info')">Info</button>
+            <button class="nav-tab" onclick="showTab('info')">Facts</button>
         </div>
 
         <!-- Main Content -->
@@ -87,9 +87,14 @@
                 <!-- Action Buttons -->
                 <div class="action-buttons">
                     <button class="action-btn primary" onclick="window.location.href='scan.html'">New Scan</button>
-                    <button class="action-btn secondary" onclick="window.location.href='results.html'">View Results</button>
                 </div>
             </div>
+
+            <style>.action-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}</style>
 
             <!-- HISTORY TAB -->
             <div id="history" class="page-section">
@@ -160,31 +165,30 @@
             </div>
 
             <!-- INFO TAB -->
-<!-- INFO TAB -->
 <div id="info" class="page-section">
     <!-- Health Impact Header -->
     <div class="progress-section" style="text-align: center; margin-bottom: 24px;">
         <h2 style="font-size: 20px; color: #374151; margin-bottom: 8px; font-weight: 600;">Microplastics & Human Health</h2>
-        <p style="font-size: 14px; color: #6b7280;">Understanding the health implications of microplastic exposure</p>
+        <p style="font-size: 14px; color: #6b7280;">Current research on microplastic exposure effects</p>
     </div>
 
     <!-- Health Risk Categories -->
     <div class="action-cards">
         <div class="action-card" style="background: #ef4444; color: white; height: auto; padding: 20px;">
             <div class="action-card-header" style="flex-direction: column; align-items: flex-start;">
-                <div class="action-title" style="margin-bottom: 16px;">Critical Health Concerns</div>
+                <div class="action-title" style="margin-bottom: 16px;">Confirmed Health Findings</div>
                 <div style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
                     <div style="background: rgba(255, 255, 255, 0.15); border-radius: 8px; padding: 12px;">
-                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Organ Accumulation</div>
-                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Research has identified microplastic particles in liver, kidney, and brain tissue samples.</div>
+                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Blood Detection</div>
+                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Studies confirm microplastic particles in human blood samples (2022 research).</div>
                     </div>
                     <div style="background: rgba(255, 255, 255, 0.15); border-radius: 8px; padding: 12px;">
-                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Blood Contamination</div>
-                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Studies have detected plastic particles circulating in human bloodstream.</div>
+                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Lung Tissue</div>
+                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Microplastics found in lung tissue samples, likely from airborne exposure.</div>
                     </div>
                     <div style="background: rgba(255, 255, 255, 0.15); border-radius: 8px; padding: 12px;">
-                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Placental Transfer</div>
-                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Microplastics can cross the placental barrier, affecting fetal development.</div>
+                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Placental Detection</div>
+                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Particles detected in placental tissue, though health effects are under study.</div>
                     </div>
                 </div>
             </div>
@@ -192,19 +196,19 @@
 
         <div class="action-card" style="background: #f59e0b; color: white; height: auto; padding: 20px;">
             <div class="action-card-header" style="flex-direction: column; align-items: flex-start;">
-                <div class="action-title" style="margin-bottom: 16px;">Respiratory & Digestive Impact</div>
+                <div class="action-title" style="margin-bottom: 16px;">Potential Health Concerns</div>
                 <div style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
                     <div style="background: rgba(255, 255, 255, 0.15); border-radius: 8px; padding: 12px;">
-                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Lung Inflammation</div>
-                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Airborne microplastic particles cause chronic respiratory irritation.</div>
+                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Inflammatory Response</div>
+                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Laboratory studies suggest particles may trigger inflammation in tissues.</div>
                     </div>
                     <div style="background: rgba(255, 255, 255, 0.15); border-radius: 8px; padding: 12px;">
-                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Gut Microbiome</div>
-                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Ingested particles may alter beneficial bacteria populations.</div>
+                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Chemical Transport</div>
+                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Particles may carry chemical additives and pollutants into the body.</div>
                     </div>
                     <div style="background: rgba(255, 255, 255, 0.15); border-radius: 8px; padding: 12px;">
-                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Intestinal Barrier</div>
-                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Chronic exposure may weaken the intestinal lining integrity.</div>
+                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Digestive Impact</div>
+                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Ongoing research on gut health and microbiome effects.</div>
                     </div>
                 </div>
             </div>
@@ -212,19 +216,19 @@
 
         <div class="action-card" style="background: #6b7280; color: white; height: auto; padding: 20px;">
             <div class="action-card-header" style="flex-direction: column; align-items: flex-start;">
-                <div class="action-title" style="margin-bottom: 16px;">Cellular & Hormonal Effects</div>
+                <div class="action-title" style="margin-bottom: 16px;">Research Areas</div>
                 <div style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
                     <div style="background: rgba(255, 255, 255, 0.15); border-radius: 8px; padding: 12px;">
-                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Endocrine Disruption</div>
-                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Chemical additives interfere with hormone production and function.</div>
+                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Long-term Effects</div>
+                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Scientists are studying chronic exposure impacts over decades.</div>
                     </div>
                     <div style="background: rgba(255, 255, 255, 0.15); border-radius: 8px; padding: 12px;">
-                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Oxidative Stress</div>
-                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Microplastic exposure accelerates cellular damage and aging.</div>
+                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Dose-Response</div>
+                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Determining safe exposure levels and particle size effects.</div>
                     </div>
                     <div style="background: rgba(255, 255, 255, 0.15); border-radius: 8px; padding: 12px;">
-                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Immune Response</div>
-                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Foreign particles trigger chronic inflammatory responses.</div>
+                        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 4px;">Vulnerable Groups</div>
+                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9); line-height: 1.4;">Studying effects on infants, pregnant women, and elderly populations.</div>
                     </div>
                 </div>
             </div>
@@ -233,29 +237,29 @@
 
     <!-- Exposure Sources -->
     <div class="progress-section">
-        <div class="progress-title">Primary Exposure Sources</div>
+        <div class="progress-title">Major Exposure Sources</div>
         <div class="progress-item">
-            <div class="progress-label">Food Packaging</div>
-            <div class="progress-bar">
-                <div class="progress-fill" style="background: #ef4444; width: 90%"></div>
-            </div>
-        </div>
-        <div class="progress-item">
-            <div class="progress-label">Drinking Water</div>
+            <div class="progress-label">Drinking Water (varies by region)</div>
             <div class="progress-bar">
                 <div class="progress-fill" style="background: #ef4444; width: 85%"></div>
             </div>
         </div>
         <div class="progress-item">
-            <div class="progress-label">Seafood</div>
+            <div class="progress-label">Food Packaging</div>
             <div class="progress-bar">
-                <div class="progress-fill" style="background: #f59e0b; width: 65%"></div>
+                <div class="progress-fill" style="background: #ef4444; width: 80%"></div>
             </div>
         </div>
         <div class="progress-item">
-            <div class="progress-label">Airborne</div>
+            <div class="progress-label">Seafood & Fish</div>
             <div class="progress-bar">
-                <div class="progress-fill" style="background: #6b7280; width: 55%"></div>
+                <div class="progress-fill" style="background: #f59e0b; width: 70%"></div>
+            </div>
+        </div>
+        <div class="progress-item">
+            <div class="progress-label">Airborne Particles</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="background: #6b7280; width: 50%"></div>
             </div>
         </div>
     </div>
@@ -263,16 +267,23 @@
     <!-- Statistics -->
     <div class="stats-grid">
         <div class="stat-card">
-            <div class="stat-number">5g</div>
-            <div class="stat-label">Weekly Consumption</div>
+            <div class="stat-number">0.1-5g</div>
+            <div class="stat-label">Monthly Intake Range</div>
         </div>
         <div class="stat-card">
-            <div class="stat-number">83%</div>
-            <div class="stat-label">Tap Water Contaminated</div>
+            <div class="stat-number">72%</div>
+            <div class="stat-label">Salt Brands (EU study)</div>
         </div>
         <div class="stat-card">
-            <div class="stat-number">90%</div>
-            <div class="stat-label">Sea Salt Brands</div>
+            <div class="stat-number">Varies</div>
+            <div class="stat-label">Water Contamination</div>
+        </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div style="background: rgba(107, 114, 128, 0.1); border-radius: 12px; padding: 16px; margin: 24px 0; border-left: 4px solid #6b7280;">
+        <div style="font-size: 12px; color: #6b7280; line-height: 1.4;">
+            <strong>Note:</strong> Microplastic health research is rapidly evolving. While detection in human tissues is confirmed, long-term health effects are still being studied. This information reflects current scientific understanding as of 2024.
         </div>
     </div>
 
@@ -292,7 +303,8 @@
             </div>
 
             <div class="nav-item" onclick="window.location.href='info.html'">
-                <div class="nav-icon">ℹ️</div>
+                <div class="nav-icon" style="background: white; color: #272757; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold;">ⓘ</div>
+                <div class="nav-label">Info</div>
             </div>
         </div>
     </div>
